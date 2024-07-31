@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from '../shared/config/database.config';
-import { CustomerEntity } from './entities/customer.entity';
 import { ProductEntity } from './entities/product.entity';
 import { TransactionEntity } from './entities/transaction.entity';
 import { TransactionProductEntity } from './entities/transaction-product.entity';
@@ -22,7 +21,6 @@ import { TransactionProductEntity } from './entities/transaction-product.entity'
           database: database.name,
           synchronize: true,
           entities: [
-            CustomerEntity,
             TransactionEntity,
             ProductEntity,
             TransactionProductEntity,

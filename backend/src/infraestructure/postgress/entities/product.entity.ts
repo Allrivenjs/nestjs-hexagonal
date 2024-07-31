@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  Timestamp,
+  UpdateDateColumn,
+} from 'typeorm';
 import { TransactionEntity } from './transaction.entity';
 
 @Entity({ name: 'products' })
@@ -15,4 +23,15 @@ export class ProductEntity {
   unitsInStock: number;
   @ManyToMany(() => TransactionEntity, (transaction) => transaction.products)
   transactions: TransactionEntity[];
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'created_at',
+  })
+  created_at: Timestamp;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    name: 'updated_at',
+  })
+  updated_at: Timestamp;
 }
