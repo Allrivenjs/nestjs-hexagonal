@@ -1,4 +1,11 @@
-import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Timestamp,
+  UpdateDateColumn,
+} from 'typeorm';
 import { TransactionEntity } from './transaction.entity';
 import { ProductEntity } from './product.entity';
 
@@ -13,4 +20,15 @@ export class TransactionProductEntity {
 
   @Column()
   quantity: number;
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'created_at',
+  })
+  created_at: Timestamp;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    name: 'updated_at',
+  })
+  updated_at: Timestamp;
 }

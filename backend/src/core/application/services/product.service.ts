@@ -2,22 +2,34 @@
 import { Injectable } from '@nestjs/common';
 import { ProductEntity } from '../../domain/entities/product.entity';
 import { CreateProductDto } from '../../shared/dto/create-product.dto';
-import { ProductRepository } from '../../domain/ports/outbound/ProductRepository';
+import { ProductApplication } from '../ProductApplication';
+import { ProductsService } from '../../domain/ports/inbound/ProductsService';
 
 @Injectable()
-export class ProductService {
-  constructor(private readonly productRepository: ProductRepository) {}
+export class ProductApplicationService implements ProductApplication {
+  constructor(private product: ProductsService) {}
 
-  async save(createProductDto: CreateProductDto): Promise<ProductEntity> {
-    const newProduct = new ProductEntity(
-      this.productRepository.getNextId(),
-      createProductDto.productName,
-      createProductDto.productDescription,
-      createProductDto.unitPrice,
-      createProductDto.unitsInStock,
-      [],
+  async createProduct(newProduct: CreateProductDto): Promise<number> {
+    const entity = ProductEntity.create(
+      newProduct.productName,
+      newProduct.productDescription,
     );
+    const saved = await this.product.save(entity);
+    return saved.productId;
+  }
 
-    return await this.productRepository.save(newProduct);
+  async findAll(): Promise<ProductEntity[]> {
+    return await this.product.findAll();
+  }
+
+  async findByIds(id: number[]): Promise<ProductEntity[]> {
+    return await this.product.findByIds(id);
+  }
+
+  async updateStockProduct(
+    productId: number,
+    quantity: number,
+  ): Promise<ProductEntity> {
+    return await this.product.updateStock(productId, quantity);
   }
 }

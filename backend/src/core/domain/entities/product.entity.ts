@@ -6,20 +6,15 @@ export class ProductEntity {
   productDescription: string;
   unitPrice: number;
   unitsInStock: number;
-  transactions: TransactionEntity[];
-  constructor(
-    productId: number,
-    productName: string,
-    productDescription: string,
-    unitPrice: number,
-    unitsInStock: number,
-    transactions: TransactionEntity[],
-  ) {
-    this.productId = productId;
-    this.productName = productName;
-    this.productDescription = productDescription;
-    this.unitPrice = unitPrice;
-    this.unitsInStock = unitsInStock;
-    this.transactions = transactions;
+  transactions?: TransactionEntity[];
+
+  static create(name: string, description: string): ProductEntity {
+    const product = new ProductEntity();
+    product.productName = name;
+    product.productDescription = description;
+    product.unitPrice = 0;
+    product.unitsInStock = 0;
+    product.transactions = [];
+    return product;
   }
 }

@@ -1,15 +1,15 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
-  ManyToOne,
   PrimaryGeneratedColumn,
+  Timestamp,
+  UpdateDateColumn,
 } from 'typeorm';
 import { StatusType } from '../../../core/shared/types/status.type';
 import { ProductEntity } from './product.entity';
-import { CustomerEntity } from './customer.entity';
-
 @Entity({ name: 'transactions' })
 export class TransactionEntity {
   @PrimaryGeneratedColumn({ name: 'transaction_id' })
@@ -28,9 +28,6 @@ export class TransactionEntity {
   @Column({ name: 'date' })
   date: Date;
 
-  @ManyToOne(() => CustomerEntity, (customer) => customer.transactions)
-  customer: CustomerEntity;
-
   @ManyToMany(() => ProductEntity, (product) => product.transactions)
   @JoinTable({
     name: 'transaction_products',
@@ -44,4 +41,15 @@ export class TransactionEntity {
     },
   })
   products: ProductEntity[];
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'created_at',
+  })
+  created_at: Timestamp;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    name: 'updated_at',
+  })
+  updated_at: Timestamp;
 }
