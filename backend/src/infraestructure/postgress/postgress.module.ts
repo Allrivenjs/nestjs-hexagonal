@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from '../shared/config/database.config';
+import { CustomerEntity } from './entities/customer.entity';
+import { ProductEntity } from './entities/product.entity';
+import { TransactionEntity } from './entities/transaction.entity';
+import { TransactionProductEntity } from './entities/transaction-product.entity';
 
 @Module({
   imports: [
@@ -9,7 +13,6 @@ import { DatabaseConfig } from '../shared/config/database.config';
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService) => {
         const database = config.get<DatabaseConfig>('database');
-        console.log(__dirname + '/**/*.entity{.ts,.js}');
         return {
           type: 'postgres',
           host: database.host,
@@ -17,8 +20,13 @@ import { DatabaseConfig } from '../shared/config/database.config';
           username: database.user,
           password: database.password,
           database: database.name,
-          entities: [__dirname + '/entities/*.entity{.ts,.js}'],
-          synchronize: false,
+          synchronize: true,
+          entities: [
+            CustomerEntity,
+            TransactionEntity,
+            ProductEntity,
+            TransactionProductEntity,
+          ],
           logging: ['query'],
         };
       },

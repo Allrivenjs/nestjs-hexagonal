@@ -1,27 +1,39 @@
 import {
   IsString,
   IsInt,
-  IsOptional,
   Min,
-  Max,
   IsNotEmpty,
+  IsOptional,
+  ArrayNotEmpty,
+  IsArray,
 } from 'class-validator';
 
 export class CreateProductDto {
-  @IsString()
   @IsNotEmpty()
-  readonly name: string;
+  @IsInt()
+  productId: number;
 
+  @IsNotEmpty()
   @IsString()
+  productName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  productDescription: string;
+
+  @IsNotEmpty()
+  @IsInt()
+  @Min(0)
+  unitPrice: number;
+
+  @IsNotEmpty()
+  @IsInt()
+  @Min(0)
+  unitsInStock: number;
+
   @IsOptional()
-  readonly description?: string;
-
-  @IsInt()
-  @Min(0)
-  readonly price: number;
-
-  @IsInt()
-  @Min(0)
-  @Max(100)
-  readonly stock: number;
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsInt({ each: true })
+  transactionsIds: number[];
 }
