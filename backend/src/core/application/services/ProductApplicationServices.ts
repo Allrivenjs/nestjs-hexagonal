@@ -1,4 +1,4 @@
-// core/application/services/product.service.ts
+// core/application/services/ProductApplicationServices.ts
 import { Injectable } from '@nestjs/common';
 import { ProductEntity } from '../../domain/entities/product.entity';
 import { CreateProductDto } from '../../shared/dto/create-product.dto';
@@ -31,5 +31,9 @@ export class ProductApplicationService implements ProductApplication {
     quantity: number,
   ): Promise<ProductEntity> {
     return await this.product.updateStock(productId, quantity);
+  }
+
+  async findById(productId: number): Promise<ProductEntity> {
+    return await this.product.findById(productId);
   }
 }

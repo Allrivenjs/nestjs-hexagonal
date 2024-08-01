@@ -7,20 +7,13 @@ import { TransactionEntity } from '../../domain/entities/transaction.entity';
 import { StatusType } from '../../shared/types/status.type';
 @Injectable()
 export class TransactionApplicationService implements TransactionApplication {
-  constructor(
-    private transaction: TransactionService,
-    private product: ProductsService,
-  ) {}
+  constructor(private transaction: TransactionService) {}
 
   async createTransaction(transaction: CreateTransactionDto): Promise<number> {
-    const products = await this.product.findByIds(transaction.productIds);
-    if (!products || products.length === 0) {
-      throw new NotFoundException('Products not found');
-    }
     const entity = TransactionEntity.create(
       transaction.date,
       transaction.amount,
-      products,
+      transaction.productIds,
     );
     const saved = await this.transaction.save(entity);
 
