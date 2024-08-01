@@ -13,6 +13,9 @@ export class ProductApplicationService implements ProductApplication {
     const entity = ProductEntity.create(
       newProduct.productName,
       newProduct.productDescription,
+      newProduct.imageUrl,
+      newProduct.unitsInStock,
+      newProduct.unitPrice,
     );
     const saved = await this.product.save(entity);
     return saved.productId;

@@ -27,4 +27,12 @@ export class ProductRepositoryAdapter implements ProductRepository {
     await this.repository.update(id, { unitsInStock: quantity });
     return await this.repository.findOneBy({ productId: id });
   }
+
+  findById(id: number): Promise<ProductEntity> {
+    return this.repository.findOneBy({ productId: id });
+  }
+
+  saveAll(products: ProductEntity[]): Promise<ProductEntity[]> {
+    return this.repository.save(products);
+  }
 }

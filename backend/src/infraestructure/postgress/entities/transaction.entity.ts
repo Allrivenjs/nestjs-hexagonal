@@ -29,27 +29,6 @@ export class TransactionEntity {
   date: Date;
 
   @ManyToMany(() => ProductEntity, (product) => product.transactions)
-  @JoinTable({
-    name: 'transaction_products',
-    joinColumn: {
-      name: 'transactionId',
-      referencedColumnName: 'transactionId',
-    },
-    inverseJoinColumn: {
-      name: 'productId',
-      referencedColumnName: 'productId',
-    },
-  })
+  @JoinTable()
   products: ProductEntity[];
-  @CreateDateColumn({
-    type: 'timestamp',
-    name: 'created_at',
-  })
-  created_at: Timestamp;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    name: 'updated_at',
-  })
-  updated_at: Timestamp;
 }
