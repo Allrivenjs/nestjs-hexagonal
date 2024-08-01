@@ -2,9 +2,9 @@ import { DynamicModule, Module, Type } from '@nestjs/common';
 import { ProductRepository } from './domain/ports/outbound/ProductRepository';
 import { TransactionRepository } from './domain/ports/outbound/TransactionRepository';
 import { ProductsService } from './domain/ports/inbound/ProductsService';
-import { ProductApplicationService } from './application/services/product.service';
+import { ProductApplicationService } from './application/services/ProductApplicationServices';
 import { TransactionService } from './domain/ports/inbound/TransactionService';
-import { TransactionApplicationService } from './application/services/transaction.service';
+import { TransactionApplicationService } from './application/services/TransactionApplicationServices';
 import { ProductDomainService } from './domain/services/ProductDomainService';
 import { TransactionDomainService } from './domain/services/TransactionDomainService';
 

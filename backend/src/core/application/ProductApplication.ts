@@ -9,4 +9,5 @@ export interface ProductApplication {
   ): Promise<ProductEntity>;
   findAll(): Promise<Array<ProductEntity>>;
   findByIds(productIds: number[]): Promise<ProductEntity[]>;
+  findById(productId: number): Promise<ProductEntity>;
 }
