@@ -1,10 +1,10 @@
 import { TransactionService } from '../ports/inbound/TransactionService';
-import { TransctionRepository } from '../ports/outbound/TransctionRepository';
+import { TransactionRepository } from '../ports/outbound/TransactionRepository';
 import { TransactionEntity } from '../entities/transaction.entity';
 import { StatusType } from '../../shared/types/status.type';
 
 export class TransactionDomainService implements TransactionService {
-  constructor(private repository: TransctionRepository) {}
+  constructor(private repository: TransactionRepository) {}
   findAll(): Promise<TransactionEntity[]> {
     return this.repository.findAll();
   }
@@ -12,10 +12,10 @@ export class TransactionDomainService implements TransactionService {
     return this.repository.findById(id);
   }
   updateStatus(
-    transaction: TransactionEntity,
+    transactionId: number,
     status: StatusType,
   ): Promise<TransactionEntity> {
-    return this.repository.updateStatus(transaction, status);
+    return this.repository.updateStatus(transactionId, status);
   }
 
   save(transaction: TransactionEntity): Promise<TransactionEntity> {

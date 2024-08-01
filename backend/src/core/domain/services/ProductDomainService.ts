@@ -1,6 +1,7 @@
 import { ProductRepository } from '../ports/outbound/ProductRepository';
 import { ProductEntity } from '../entities/product.entity';
 import { ProductsService } from '../ports/inbound/ProductsService';
+import { ProductServiceError } from '../../shared/error/ProductServiceError';
 
 export class ProductDomainService implements ProductsService {
   constructor(private repository: ProductRepository) {}
@@ -13,7 +14,9 @@ export class ProductDomainService implements ProductsService {
     if (this.validateProductPrice(product)) {
       return this.repository.save(product);
     }
-    throw new Error('Product price cannot be negative or equal to zero');
+    throw new ProductServiceError(
+      'Product price cannot be negative or equal to zero',
+    );
   }
 
   async updateStock(id: number, quantity: number): Promise<ProductEntity> {
@@ -30,5 +33,9 @@ export class ProductDomainService implements ProductsService {
 
   async findAll(): Promise<ProductEntity[]> {
     return this.repository.findAll();
+  }
+
+  findById(id: number): Promise<ProductEntity> {
+    return this.repository.findById(id);
   }
 }
