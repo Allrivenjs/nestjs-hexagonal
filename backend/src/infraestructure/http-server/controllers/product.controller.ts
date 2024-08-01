@@ -74,7 +74,8 @@ export class ProductController {
   async generateFakeProducts(@Body('count') count: number) {
     console.log(`(POST) Generate fake products count=${count}`);
     Log.info(`(POST) Generate fake products count=${count}`);
-    const products = ProductSeeder.run(count);
+    const products = await ProductSeeder.run(count);
+    console.log(products);
     return Promise.all(
       products.map((product) => this.application.createProduct(product)),
     );
