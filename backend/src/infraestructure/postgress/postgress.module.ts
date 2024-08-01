@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from '../shared/config/database.config';
 import { ProductEntity } from './entities/product.entity';
 import { TransactionEntity } from './entities/transaction.entity';
-import { TransactionProductEntity } from './entities/transaction-product.entity';
 
 @Module({
   imports: [
@@ -20,11 +19,7 @@ import { TransactionProductEntity } from './entities/transaction-product.entity'
           password: database.password,
           database: database.name,
           synchronize: true,
-          entities: [
-            TransactionEntity,
-            ProductEntity,
-            TransactionProductEntity,
-          ],
+          entities: [TransactionEntity, ProductEntity],
           logging: ['query'],
         };
       },

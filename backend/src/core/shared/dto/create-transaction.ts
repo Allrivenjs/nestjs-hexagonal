@@ -9,7 +9,6 @@ import {
   ArrayNotEmpty,
 } from 'class-validator';
 import { StatusType } from '../types/status.type';
-import { ProductEntity } from '../../domain/entities/product.entity';
 
 export class CreateTransactionDto {
   @IsNotEmpty()
@@ -29,5 +28,5 @@ export class CreateTransactionDto {
   @IsArray()
   @ArrayNotEmpty()
   @IsInt({ each: true })
-  productIds: ProductEntity[];
+  productIds: number[];
 }

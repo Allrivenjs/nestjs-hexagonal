@@ -4,17 +4,26 @@ export class ProductEntity {
   productId: number;
   productName: string;
   productDescription: string;
+  imageUrl: string;
   unitPrice: number;
   unitsInStock: number;
   transactions?: TransactionEntity[];
 
-  static create(name: string, description: string): ProductEntity {
+  static create(
+    name: string,
+    description: string,
+    imageUrl: string,
+    stock: number,
+    price: number,
+  ): ProductEntity {
     const product = new ProductEntity();
     product.productName = name;
     product.productDescription = description;
-    product.unitPrice = 0;
-    product.unitsInStock = 0;
+    product.unitPrice = price;
+    product.unitsInStock = stock;
     product.transactions = [];
+    product.imageUrl = imageUrl;
+
     return product;
   }
 }

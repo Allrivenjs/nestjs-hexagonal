@@ -31,6 +31,8 @@ describe('ProductApplicationService', () => {
       productId: 1,
       productName: 'Chocolate',
       productDescription: 'Chocolate',
+      unitsInStock: 10,
+      unitPrice: 10,
     } as CreateProductDto);
 
     expect(productMock.save).toHaveBeenCalled();

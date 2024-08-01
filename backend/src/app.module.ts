@@ -4,6 +4,7 @@ import { InfrastructureModule } from './infraestructure/infraestructure.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProductRepositoryAdapter } from './infraestructure/adapters/product.repository.adapter';
 import { TransactionRepositoryAdapter } from './infraestructure/adapters/transaction.repository.adapter';
+import { SharedModule } from "./infraestructure/shared/shared.module";
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TransactionRepositoryAdapter } from './infraestructure/adapters/transac
       },
     }),
     InfrastructureModule,
+    SharedModule,
   ],
 })
 export class AppModule {}
