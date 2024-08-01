@@ -12,7 +12,7 @@ export class ProductService {
   ) {}
   // Genera y guarda varios productos falsos
   async generateAndSaveFakeProducts(count: number): Promise<ProductEntity[]> {
-    const products = ProductSeeder.run(count);
+    const products = await ProductSeeder.run(count);
     return await this.productRepository.save(products);
   }
 }
