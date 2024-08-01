@@ -5,6 +5,7 @@ export interface ProductsService {
   validateProductPrice(product: ProductEntity): boolean;
   updateStock(id: number, quantity: number): Promise<ProductEntity>;
   findByIds(ids: number[]): Promise<ProductEntity[]>;
+  findById(id: number): Promise<ProductEntity>;
   findAll(): Promise<ProductEntity[]>;
   validateProductStock(product: ProductEntity, quantity: number): boolean;
 }

@@ -6,7 +6,7 @@ export interface TransactionService {
   findAll(): Promise<TransactionEntity[]>;
   save(transaction: TransactionEntity): Promise<TransactionEntity>;
   updateStatus(
-    transaction: TransactionEntity,
+    transactionId: number,
     status: StatusType,
   ): Promise<TransactionEntity>;
 }
