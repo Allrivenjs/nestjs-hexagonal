@@ -9,7 +9,7 @@ import {
 import { CustomerEntity } from './customer.entity';
 import { CardEntity } from './card.entity';
 import { ProductEntity } from './product.entity';
-import { JoinColumn } from 'typeorm/browser';
+import { JoinColumn } from 'typeorm';
 
 @Entity({ name: 'transactions' })
 export class TransactionEntity {

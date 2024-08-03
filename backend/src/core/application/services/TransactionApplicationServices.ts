@@ -24,6 +24,11 @@ export class TransactionApplicationService implements TransactionApplication {
     private readonly httpService: HttpService,
   ) {
     this.payment = new PaymentDomainService(httpService);
+
+    console.log('transaction: ', transaction);
+    console.log('product: ', product);
+    console.log('customer: ', customer);
+    console.log('card: ', card);
   }
 
   async createTransaction(transaction: CreateTransactionDto): Promise<number> {
@@ -33,6 +38,21 @@ export class TransactionApplicationService implements TransactionApplication {
     }
     console.log('product: ', product);
     let customer: Customer;
+
+    console.log('transaction.customer: ', transaction.customer);
+    try {
+      const customerEntity = Customer.create(
+        transaction.customer.name,
+        transaction.customer.email,
+        transaction.customer.phone,
+        transaction.customer.address,
+      );
+      console.log(this.customer);
+      customer = await this.customer.save(customerEntity);
+      console.log('customer: ', customer);
+    } catch (error) {
+      throw new HttpException('Error creating customer ' + error, 500);
+    }
 
     let card: Card;
     try {
@@ -48,20 +68,6 @@ export class TransactionApplicationService implements TransactionApplication {
       console.log('card: ', card);
     } catch (error) {
       throw new HttpException('Error creating card ' + error, 500);
-    }
-
-    console.log('transaction.customer: ', transaction.customer);
-    try {
-      const customerEntity = Customer.create(
-        transaction.customer.name,
-        transaction.customer.email,
-        transaction.customer.phone,
-        transaction.customer.address,
-      );
-      customer = await this.customer.save(customerEntity);
-      console.log('customer: ', customer);
-    } catch (error) {
-      throw new HttpException('Error creating customer ' + error, 500);
     }
 
     const payment = await this.payment.createTransaction(

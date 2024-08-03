@@ -53,7 +53,7 @@ export class CreateTransactionRequest {
     number: string;
     exp_month: string;
     exp_year: string;
-    cvc: string;
+    cvv: string;
     card_holder: string;
     installments: number;
   };

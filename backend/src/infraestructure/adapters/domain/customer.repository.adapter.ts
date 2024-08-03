@@ -17,6 +17,7 @@ export class CustomerRepositoryAdapter implements CustomerRepository {
   }
 
   async save(customer: Customer): Promise<Customer> {
+    console.log('CustomerRepositoryAdapter.save', customer);
     return this.repository.save(customer);
   }
 }

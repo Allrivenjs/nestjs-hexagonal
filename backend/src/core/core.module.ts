@@ -118,8 +118,8 @@ export class CoreModule {
       inject: [
         TRANSACTION_SERVICE,
         PRODUCT_SERVICE,
-        CARD_SERVICE,
         CUSTOMER_SERVICE,
+        CARD_SERVICE,
       ],
     };
 
