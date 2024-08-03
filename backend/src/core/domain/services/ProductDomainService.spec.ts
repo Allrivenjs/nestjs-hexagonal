@@ -1,5 +1,5 @@
 import { ProductRepository } from '../ports/outbound/ProductRepository';
-import { ProductEntity } from '../entities/product.entity';
+import { Product } from '../entities/Product';
 import { ProductDomainService } from './ProductDomainService';
 import { ProductServiceError } from '../../shared/error/ProductServiceError';
 
@@ -7,11 +7,9 @@ function ProductRepositoryMock(): ProductRepository {
   return {
     findByIds: jest.fn().mockReturnValue(Promise.resolve([])),
     findAll: jest.fn().mockReturnValue(Promise.resolve([])),
-    save: jest.fn().mockReturnValue(Promise.resolve(new ProductEntity())),
-    updateStock: jest
-      .fn()
-      .mockReturnValue(Promise.resolve(new ProductEntity())),
-    findById: jest.fn().mockReturnValue(Promise.resolve(new ProductEntity())),
+    save: jest.fn().mockReturnValue(Promise.resolve(new Product())),
+    updateStock: jest.fn().mockReturnValue(Promise.resolve(new Product())),
+    findById: jest.fn().mockReturnValue(Promise.resolve(new Product())),
   };
 }
 
@@ -38,7 +36,7 @@ describe('ProductDomainService', () => {
     await services.save({
       productId: 1,
       unitPrice: 100,
-    } as ProductEntity);
+    } as Product);
     expect(repositoryMock.save).toHaveBeenCalled();
   });
 
@@ -53,10 +51,10 @@ describe('ProductDomainService', () => {
     const repositoryMock = ProductRepositoryMock();
     services = new ProductDomainService(repositoryMock);
     await expect(
-      services.save({ productId: 1, unitPrice: 0 } as ProductEntity),
+      services.save({ productId: 1, unitPrice: 0 } as Product),
     ).rejects.toThrow(ProductServiceError);
     await expect(
-      services.save({ productId: 1, unitPrice: -10 } as ProductEntity),
+      services.save({ productId: 1, unitPrice: -10 } as Product),
     ).rejects.toThrow(ProductServiceError);
   });
 

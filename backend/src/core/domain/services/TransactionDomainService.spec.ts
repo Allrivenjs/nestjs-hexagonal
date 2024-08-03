@@ -1,18 +1,14 @@
 import { TransactionRepository } from '../ports/outbound/TransactionRepository';
-import { TransactionEntity } from '../entities/transaction.entity';
+import { Transaction } from '../entities/Transaction';
 import { TransactionDomainService } from './TransactionDomainService';
 import { StatusType } from '../../shared/types/status.type';
 
 function TransactionRepositoryMock(): TransactionRepository {
   return {
-    save: jest.fn().mockReturnValue(Promise.resolve(new TransactionEntity())),
-    findById: jest
-      .fn()
-      .mockReturnValue(Promise.resolve(new TransactionEntity())),
+    save: jest.fn().mockReturnValue(Promise.resolve(new Transaction())),
+    findById: jest.fn().mockReturnValue(Promise.resolve(new Transaction())),
     findAll: jest.fn().mockReturnValue(Promise.resolve([])),
-    updateStatus: jest
-      .fn()
-      .mockReturnValue(Promise.resolve(new TransactionEntity())),
+    updateStatus: jest.fn().mockReturnValue(Promise.resolve(new Transaction())),
   };
 }
 
@@ -25,7 +21,7 @@ describe('TransactionDomainService', () => {
     await service.save({
       transactionId: 1,
       amount: 100,
-    } as TransactionEntity);
+    } as Transaction);
     expect(repositoryMock.save).toHaveBeenCalled();
   });
 

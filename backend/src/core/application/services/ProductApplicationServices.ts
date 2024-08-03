@@ -1,6 +1,6 @@
 // core/application/services/ProductApplicationServices.ts
 import { Injectable } from '@nestjs/common';
-import { ProductEntity } from '../../domain/entities/product.entity';
+import { Product } from '../../domain/entities/Product';
 import { CreateProductDto } from '../../shared/dto/create-product.dto';
 import { ProductApplication } from '../ProductApplication';
 import { ProductsService } from '../../domain/ports/inbound/ProductsService';
@@ -10,7 +10,7 @@ export class ProductApplicationService implements ProductApplication {
   constructor(private product: ProductsService) {}
 
   async createProduct(newProduct: CreateProductDto): Promise<number> {
-    const entity = ProductEntity.create(
+    const entity = Product.create(
       newProduct.productName,
       newProduct.productDescription,
       newProduct.imageUrl,
@@ -21,22 +21,22 @@ export class ProductApplicationService implements ProductApplication {
     return saved.productId;
   }
 
-  async findAll(): Promise<ProductEntity[]> {
+  async findAll(): Promise<Product[]> {
     return await this.product.findAll();
   }
 
-  async findByIds(id: number[]): Promise<ProductEntity[]> {
+  async findByIds(id: number[]): Promise<Product[]> {
     return await this.product.findByIds(id);
   }
 
   async updateStockProduct(
     productId: number,
     quantity: number,
-  ): Promise<ProductEntity> {
+  ): Promise<Product> {
     return await this.product.updateStock(productId, quantity);
   }
 
-  async findById(productId: number): Promise<ProductEntity> {
+  async findById(productId: number): Promise<Product> {
     return await this.product.findById(productId);
   }
 }

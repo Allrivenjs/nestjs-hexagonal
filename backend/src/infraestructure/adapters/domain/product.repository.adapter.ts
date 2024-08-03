@@ -1,8 +1,9 @@
-import { ProductRepository } from '../../core/domain/ports/outbound/ProductRepository';
+import { ProductRepository } from '../../../core/domain/ports/outbound/ProductRepository';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductEntity } from '../../core/domain/entities/product.entity';
+import { Product } from '../../../core/domain/entities/Product';
 import { In, Repository } from 'typeorm';
+import { ProductEntity } from '../../postgress/entities/product.entity';
 
 @Injectable()
 export class ProductRepositoryAdapter implements ProductRepository {
@@ -11,28 +12,28 @@ export class ProductRepositoryAdapter implements ProductRepository {
     private repository: Repository<ProductEntity>,
   ) {}
 
-  findAll(): Promise<ProductEntity[]> {
+  findAll(): Promise<Product[]> {
     return this.repository.find();
   }
 
-  findByIds(ids: number[]): Promise<ProductEntity[]> {
+  findByIds(ids: number[]): Promise<Product[]> {
     return this.repository.findBy({ productId: In(ids) });
   }
 
-  save(product: ProductEntity): Promise<ProductEntity> {
+  save(product: Product): Promise<Product> {
     return this.repository.save(product);
   }
 
-  async updateStock(id: number, quantity: number): Promise<ProductEntity> {
+  async updateStock(id: number, quantity: number): Promise<Product> {
     await this.repository.update(id, { unitsInStock: quantity });
     return await this.repository.findOneBy({ productId: id });
   }
 
-  findById(id: number): Promise<ProductEntity> {
+  findById(id: number): Promise<Product> {
     return this.repository.findOneBy({ productId: id });
   }
 
-  saveAll(products: ProductEntity[]): Promise<ProductEntity[]> {
+  saveAll(products: Product[]): Promise<Product[]> {
     return this.repository.save(products);
   }
 }

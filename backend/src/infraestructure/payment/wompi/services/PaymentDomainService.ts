@@ -1,25 +1,34 @@
 import { PaymentService } from '../ports/inbound/PaymentService';
-import { PaymentRepository } from '../ports/outbound/PaymentRepository';
 import { HttpService } from '@nestjs/axios';
 import { MERCHANDISE, TOKEN_CARD, TRANSACTION } from '../shared/endpoints';
-import { CardEntity } from '../entities/card.entity';
+import { Card } from '../../../../core/domain/entities/Card';
 import { lastValueFrom } from 'rxjs';
 import { TokenizeCardResponse } from '../shared/response/tokenize-card';
 import { HttpException } from '@nestjs/common';
 import { AcceptTokenResponse } from '../shared/response/accept-token';
 import * as crypto from 'crypto';
-import { ChargeDto } from '../dto/charge.dto';
 import * as process from 'node:process';
 import { PaymentDto } from '../dto/payment.dto';
 import { PaymentResponse } from '../shared/response/payment';
+import { CardDto } from '../dto/card.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { WompiCardDto } from '../dto/wompi-card.dto';
 
 export class PaymentDomainService implements PaymentService {
   private readonly baseURL: string;
-  constructor(
-    private repository: PaymentRepository,
-    private readonly httpService: HttpService,
-  ) {
+  constructor(private readonly httpService: HttpService) {
     this.baseURL = process.env.WOMPI_URL;
+  }
+
+  mapToCard(card: Card): WompiCardDto {
+    return WompiCardDto.create(
+      card.number,
+      card.exp_month,
+      card.exp_year,
+      card.cvv,
+      card.card_holder,
+      card.installments,
+    );
   }
 
   async AcceptToken(): Promise<string> {
@@ -45,31 +54,39 @@ export class PaymentDomainService implements PaymentService {
     return (await lastValueFrom(response)).data;
   }
 
-  async createTransaction(data: ChargeDto): Promise<PaymentResponse> {
+  async createTransaction(
+    card: CardDto,
+    amount: number,
+  ): Promise<PaymentResponse> {
+    const token_data = await this.tokenizeCard(card as Card);
+    const reference = uuidv4();
     const token = await this.AcceptToken();
-    const text =
-      data.reference +
-      data.amount_in_cents +
-      data.currency +
-      process.env.WOMPI_FIRMA;
-    const hashBuffer = await crypto.subtle.digest(
-      'SHA-256',
-      new TextEncoder().encode(text),
-    );
+    const currency = 'COP';
+    const text = `${reference}${amount}${currency}${process.env.WOMPI_FIRMA}`;
+    const encondedText = new TextEncoder().encode(text);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', encondedText);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const signature = hashArray
       .map((b) => b.toString(16).padStart(2, '0'))
       .join('');
-
     const payment = PaymentDto.newChargeDto({
-      currency: data.currency,
-      amount_in_cents: data.amount_in_cents,
-      payment_method: data.payment_method,
-      reference: data.reference,
+      currency: currency,
+      amount_in_cents: amount,
+      payment_method: {
+        type: 'CARD',
+        installments: card.installments,
+        token: token_data.data.id,
+      },
+      reference: reference,
       acceptance_token: token,
       customer_email: 'test@gmail.com',
       signature: signature,
     });
+
+    payment.redirect_url =
+      process.env.SERVER_NAME !== 'localhost'
+        ? process.env.SERVER_NAME + '/transaction/result'
+        : '';
 
     const response = this.httpService.post<PaymentResponse>(
       `${this.baseURL}/${TRANSACTION}`,
@@ -96,10 +113,10 @@ export class PaymentDomainService implements PaymentService {
       .digest('hex');
   }
 
-  async tokenizeCard(card: CardEntity): Promise<TokenizeCardResponse> {
+  async tokenizeCard(card: Card): Promise<TokenizeCardResponse> {
     const response = this.httpService.post<TokenizeCardResponse>(
       `${this.baseURL}/${TOKEN_CARD}`,
-      card,
+      this.mapToCard(card),
       {
         headers: this.getHeadersPublic(),
       },

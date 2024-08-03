@@ -1,5 +1,5 @@
 import { ProductsService } from '../../domain/ports/inbound/ProductsService';
-import { ProductEntity } from '../../domain/entities/product.entity';
+import { Product } from '../../domain/entities/Product';
 import { ProductApplicationService } from './ProductApplicationServices';
 import { ProductApplication } from '../ProductApplication';
 import { CreateProductDto } from '../../shared/dto/create-product.dto';
@@ -8,7 +8,7 @@ function ProductServiceMock(productId: any): ProductsService {
   const product = {
     productId,
     productName: 'Chocolate',
-  } as ProductEntity;
+  } as Product;
   return {
     validateProductStock: jest.fn().mockReturnValue(true),
     findByIds: jest.fn().mockReturnValue(Promise.resolve([])),
@@ -33,6 +33,7 @@ describe('ProductApplicationService', () => {
       productDescription: 'Chocolate',
       unitsInStock: 10,
       unitPrice: 10,
+      imageUrl: 'https://www.google.com',
     } as CreateProductDto);
 
     expect(productMock.save).toHaveBeenCalled();
