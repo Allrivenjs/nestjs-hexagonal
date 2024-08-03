@@ -12,4 +12,8 @@ export class CustomerDomainService implements CustomerService {
   async save(customer: Customer): Promise<Customer> {
     return this.repository.save(customer);
   }
+
+  findByEmail(email: string): Promise<Customer> {
+    return this.repository.findByEmail(email);
+  }
 }

@@ -22,4 +22,8 @@ export class CustomerApplicationServices implements CustomerApplication {
   async findById(customerId: number): Promise<Customer> {
     return await this.customer.findById(customerId);
   }
+
+  async findByEmail(email: string): Promise<Customer> {
+    return await this.customer.findByEmail(email);
+  }
 }

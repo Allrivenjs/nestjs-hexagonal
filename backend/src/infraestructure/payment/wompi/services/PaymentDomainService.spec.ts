@@ -23,7 +23,7 @@ describe('PaymentDomainService', () => {
       number: '4242424242424242',
       exp_month: '08',
       exp_year: '28',
-      cvv: '123',
+      cvc: '123',
       card_holder: 'José Pérez',
       installments: 1,
     } as Card);
@@ -41,7 +41,7 @@ describe('PaymentDomainService', () => {
       number: '4242424242424242',
       exp_month: '08',
       exp_year: '28',
-      cvv: '123',
+      cvc: '123',
       card_holder: 'José Pérez',
       installments: 1,
     } as Card);

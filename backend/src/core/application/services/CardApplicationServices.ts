@@ -11,4 +11,8 @@ export class CardApplicationServices implements CardApplication {
   save(card: CardDto): Promise<Card> {
     return this.card.save(card as Card);
   }
+
+  findBy(number: string, exp_m: string, exp_y: string): Promise<Card> {
+    return this.card.findBy(number, exp_m, exp_y);
+  }
 }

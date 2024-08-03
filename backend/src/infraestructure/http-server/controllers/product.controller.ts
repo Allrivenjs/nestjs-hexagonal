@@ -19,8 +19,8 @@ import { ProductApplication } from '../../../core/application/ProductApplication
 import { AppResponse } from '../model/app.response';
 import { CreateProductRequest } from '../model/create-product.request';
 import { Log } from '../../shared/Log';
-import { ProductSeeder } from '../../postgress/seeders/ProductSeeder';
-import { GenerateFakeRequest } from "../model/generate-fake.request";
+import { GenerateFakeRequest } from '../model/generate-fake.request';
+import { ProductService } from '../../postgress/service/ProductService';
 
 @ApiTags('Products')
 @Controller('/product')
@@ -75,7 +75,9 @@ export class ProductController {
   async generateFakeProducts(@Body() request: GenerateFakeRequest) {
     const count = request.count;
     Log.info(`(POST) Generate fake products count=${count}`);
-    const products = await ProductSeeder.run(count);
+    const products = await new ProductService(
+      this.application,
+    ).generateAndSaveFakeProducts(count);
     return {
       status: 201,
       message: `Generated ${count} products`,

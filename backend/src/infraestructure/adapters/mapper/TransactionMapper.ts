@@ -19,7 +19,7 @@ export class TransactionMapper
       number: entity.card.number,
       exp_month: entity.card.exp_month,
       exp_year: entity.card.exp_year,
-      cvv: entity.card.cvv,
+      cvc: entity.card.cvc,
       installments: entity.card.installments,
       card_holder: entity.card.card_holder,
     };

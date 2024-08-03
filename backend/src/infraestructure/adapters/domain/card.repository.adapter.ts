@@ -14,4 +14,14 @@ export class CardRepositoryAdapter implements CardRepository {
   save(card: Card): Promise<Card> {
     return this.repository.save(card);
   }
+
+  findBy(number: string, exp_m: string, exp_y: string): Promise<Card> {
+    return this.repository.findOne({
+      where: {
+        number: number,
+        exp_month: exp_m,
+        exp_year: exp_y,
+      },
+    });
+  }
 }

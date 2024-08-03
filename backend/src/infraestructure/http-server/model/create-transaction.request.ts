@@ -7,7 +7,8 @@ export class CreateTransactionRequest {
     name: 'amount',
     description: 'Transaction amount',
     type: Number,
-    example: '100000',
+    example: '1000000',
+    minimum: 1000000,
   })
   amount: number;
 
@@ -42,10 +43,10 @@ export class CreateTransactionRequest {
     type: CardDto,
     example: {
       number: '4242424242424242',
-      exp_month: '12',
-      exp_year: '2024',
+      exp_month: '08',
+      exp_year: '28',
       cvc: '123',
-      card_holder: 'John Doe',
+      card_holder: 'José Pérez',
       installments: 1,
     },
   })
@@ -53,7 +54,7 @@ export class CreateTransactionRequest {
     number: string;
     exp_month: string;
     exp_year: string;
-    cvv: string;
+    cvc: string;
     card_holder: string;
     installments: number;
   };

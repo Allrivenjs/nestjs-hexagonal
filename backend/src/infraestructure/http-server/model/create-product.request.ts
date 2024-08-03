@@ -39,7 +39,7 @@ export class CreateProductRequest {
     description: 'Product image url',
     type: String,
     example:
-      'https://images.unsplash.com/photo-1485965120184-e220f721d03e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w2MzkzODR8MHwxfHNlYXJjaHwxfHxMdXh1cmlvdXMlMjBGcm96ZW4lMjBCaWtlfGVufDB8fHx8MTcyMjU2MjE0M3ww&ixlib=rb-4.0.3&q=85'
+      'https://images.unsplash.com/photo-1485965120184-e220f721d03e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w2MzkzODR8MHwxfHNlYXJjaHwxfHxMdXh1cmlvdXMlMjBGcm96ZW4lMjBCaWtlfGVufDB8fHx8MTcyMjU2MjE0M3ww&ixlib=rb-4.0.3&q=85',
   })
   imageUrl: string;
 }

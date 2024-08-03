@@ -20,12 +20,12 @@ export class PaymentDomainService implements PaymentService {
     this.baseURL = process.env.WOMPI_URL;
   }
 
-  mapToCard(card: Card): WompiCardDto {
+  mapToCard(card: CardDto): WompiCardDto {
     return WompiCardDto.create(
       card.number,
       card.exp_month,
       card.exp_year,
-      card.cvv,
+      card.cvc,
       card.card_holder,
       card.installments,
     );
@@ -58,7 +58,14 @@ export class PaymentDomainService implements PaymentService {
     card: CardDto,
     amount: number,
   ): Promise<PaymentResponse> {
-    const token_data = await this.tokenizeCard(card as Card);
+    const token_data = await this.tokenizeCard({
+      number: card.number,
+      exp_month: card.exp_month,
+      exp_year: card.exp_year,
+      cvc: card.cvc,
+      card_holder: card.card_holder,
+      installments: card.installments,
+    } as CardDto);
     const reference = uuidv4();
     const token = await this.AcceptToken();
     const currency = 'COP';
@@ -113,7 +120,7 @@ export class PaymentDomainService implements PaymentService {
       .digest('hex');
   }
 
-  async tokenizeCard(card: Card): Promise<TokenizeCardResponse> {
+  async tokenizeCard(card: CardDto): Promise<TokenizeCardResponse> {
     const response = this.httpService.post<TokenizeCardResponse>(
       `${this.baseURL}/${TOKEN_CARD}`,
       this.mapToCard(card),

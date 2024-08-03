@@ -15,7 +15,7 @@ import { JoinColumn } from 'typeorm';
 export class TransactionEntity {
   @PrimaryGeneratedColumn({ name: 'transaction_id' })
   transactionId: number;
-  @Column({ name: 'transaction_number' })
+  @Column({ name: 'transaction_number', primary: true })
   transactionNumber: string;
   @Column({
     name: 'status',
@@ -39,7 +39,7 @@ export class TransactionEntity {
   productId: number;
 
   @JoinColumn({ name: 'product_id' })
-  @OneToOne(() => ProductEntity, (product) => product.transactions)
+  @ManyToOne(() => ProductEntity, (product) => product.transactions)
   product: ProductEntity;
 
   @Column({ name: 'card_id' })

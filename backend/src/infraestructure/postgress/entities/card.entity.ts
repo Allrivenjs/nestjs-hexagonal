@@ -18,8 +18,8 @@ export class CardEntity {
   @Column({ name: 'exp_year' })
   exp_year: string;
 
-  @Column({ name: 'cvv' })
-  cvv: string;
+  @Column({ name: 'cvc' })
+  cvc: string;
   @Column({ name: 'card_holder' })
   card_holder: string;
   @Column({ name: 'installments' })

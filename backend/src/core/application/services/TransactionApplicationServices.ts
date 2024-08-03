@@ -21,14 +21,9 @@ export class TransactionApplicationService implements TransactionApplication {
     private product: ProductsService,
     private customer: CustomerService,
     private card: CardService,
-    private readonly httpService: HttpService,
+    httpService: HttpService,
   ) {
     this.payment = new PaymentDomainService(httpService);
-
-    console.log('transaction: ', transaction);
-    console.log('product: ', product);
-    console.log('customer: ', customer);
-    console.log('card: ', card);
   }
 
   async createTransaction(transaction: CreateTransactionDto): Promise<number> {
@@ -36,10 +31,17 @@ export class TransactionApplicationService implements TransactionApplication {
     if (!product || product.unitsInStock === 0) {
       throw new NotFoundException('Product not found');
     }
-    console.log('product: ', product);
+
+    if (product.unitsInStock < transaction.numberUnits) {
+      throw new HttpException('Not enough stock', 400);
+    }
+
+    if (product.unitPrice * transaction.numberUnits !== transaction.amount) {
+      throw new HttpException('Amount does not match', 400);
+    }
+
     let customer: Customer;
 
-    console.log('transaction.customer: ', transaction.customer);
     try {
       const customerEntity = Customer.create(
         transaction.customer.name,
@@ -47,9 +49,16 @@ export class TransactionApplicationService implements TransactionApplication {
         transaction.customer.phone,
         transaction.customer.address,
       );
-      console.log(this.customer);
-      customer = await this.customer.save(customerEntity);
-      console.log('customer: ', customer);
+
+      // validate if customer exists
+      const customerExists = await this.customer.findByEmail(
+        transaction.customer.email,
+      );
+      if (customerExists) {
+        customer = customerExists;
+      } else {
+        customer = await this.customer.save(customerEntity);
+      }
     } catch (error) {
       throw new HttpException('Error creating customer ' + error, 500);
     }
@@ -60,12 +69,22 @@ export class TransactionApplicationService implements TransactionApplication {
         transaction.card.number,
         transaction.card.exp_month,
         transaction.card.exp_year,
-        transaction.card.cvv,
+        transaction.card.cvc,
         transaction.card.card_holder,
         transaction.card.installments,
       );
-      card = await this.card.save(cardEntity);
-      console.log('card: ', card);
+
+      // validate if card exists
+      const cardExists = await this.card.findBy(
+        transaction.card.number,
+        transaction.card.exp_month,
+        transaction.card.exp_year,
+      );
+      if (cardExists) {
+        card = cardExists;
+      } else {
+        card = await this.card.save(cardEntity);
+      }
     } catch (error) {
       throw new HttpException('Error creating card ' + error, 500);
     }
@@ -76,7 +95,6 @@ export class TransactionApplicationService implements TransactionApplication {
     );
 
     const transactionNumber = payment.data.id;
-    console.log('transactionNumber: ', transactionNumber);
     let status: StatusType;
     if (payment.data.status === 'APPROVED') {
       status = StatusType.APPROVED;
@@ -98,7 +116,7 @@ export class TransactionApplicationService implements TransactionApplication {
         card,
         status,
       );
-      console.log('entity: ', entity);
+      console.log(entity);
       saved = await this.transaction.save(entity);
     } catch (error) {
       throw new HttpException('Error creating transaction ' + error, 500);
