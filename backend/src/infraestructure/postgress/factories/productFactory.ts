@@ -40,7 +40,9 @@ export class ProductFactory {
     const query = encodeURIComponent(productName);
     try {
       const response = await firstValueFrom(
-        this.httpService.get(
+        this.httpService.get<{
+          results: { urls: { full: string } }[];
+        }>(
           `https://api.unsplash.com/search/photos?page=1&query=${query}&client_id=Q_25CsBktTNOkdSXu3JU3j_y87DUTMlV0nl2xCwzh5A`,
           {},
         ),

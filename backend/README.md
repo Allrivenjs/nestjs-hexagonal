@@ -95,11 +95,11 @@ The project structure has been set up for you. Below is an overview of the folde
 
 1. Clone the repository: 
 ```sh
-   git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/Allrivenjs/nestjs-hexagonal.git
 ```
 2. Navigate to the project directory: 
 ```sh 
-cd your-repo
+cd nestjs-hexagonal/backend
 ```
 3. Install dependencies: 
 ```sh 
@@ -123,9 +123,7 @@ To test the API endpoints, you can import the Postman collection located in the 
 To run the tests, use the following command:
 
 ```sh 
-
-npm run test
-
+ npm run test
 ```
 
 Test e2e with jest and supertest
