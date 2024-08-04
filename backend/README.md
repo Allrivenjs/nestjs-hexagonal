@@ -1,73 +1,138 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Backend Developer Challenge
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### Description
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This challenge is designed to test your ability to consume an API, process the data, and return it in a different
+format. You will demonstrate your skills in backend development, focusing on creating a well-structured, maintainable,
+and testable codebase.
 
-## Description
+## Project Structure
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The project structure has been set up for you. Below is an overview of the folders and their purposes:
+
+```
+├───database
+├───postman
+├───src
+│   ├───core
+│   │   ├───application
+│   │   │   └───services
+│   │   ├───domain
+│   │   │   ├───entities
+│   │   │   ├───ports
+│   │   │   │   ├───inbound
+│   │   │   │   └───outbound
+│   │   │   └───services
+│   │   └───shared
+│   │       ├───dto
+│   │       ├───error
+│   │       └───types
+│   └───infraestructure
+│       ├───adapters
+│       │   ├───domain
+│       │   └───mapper
+│       ├───http-server
+│       │   ├───controllers
+│       │   ├───exception-filters
+│       │   ├───model
+│       │   └───utils
+│       ├───payment
+│       │   └───wompi
+│       │       ├───dto
+│       │       ├───entities
+│       │       ├───ports
+│       │       │   ├───inbound
+│       │       │   └───outbound
+│       │       ├───services
+│       │       └───shared
+│       │           └───response
+│       ├───postgress
+│       │   ├───entities
+│       │   ├───factories
+│       │   ├───provider
+│       │   ├───seeders
+│       │   └───service
+│       └───shared
+│           └───config
+└───test
+```
+
+## Folder Explanation
+
+- **database**: Contains database configurations and scripts.
+- **postman**: Contains Postman collections for API testing.
+- **src**: Main source folder.
+    - **core**: Contains the core application logic.
+        - **application**: Contains application services.
+        - **domain**: Contains domain entities, ports, and services.
+            - **entities**: Domain entities such as `Product`, `Transaction`, etc.
+            - **ports**: Interfaces for inbound and outbound communication.
+            - **services**: Domain services implementing business logic.
+        - **shared**: Shared resources across the core.
+            - **dto**: Data Transfer Objects for data encapsulation.
+            - **error**: Custom error classes.
+            - **types**: Shared types and interfaces.
+    - **infrastructure**: Contains infrastructure-related code.
+        - **adapters**: Adapters for integrating with the domain layer.
+        - **http-server**: Contains controllers, exception filters, models, and utilities for the HTTP server.
+        - **payment**: Contains integration with the Wompi payment API.
+            - **dto**: Data Transfer Objects specific to Wompi.
+            - **entities**: Wompi-specific entities.
+            - **ports**: Interfaces for Wompi integration.
+            - **services**: Services for interacting with the Wompi API.
+            - **shared**: Shared response handling for Wompi.
+        - **postgres**: PostgreSQL-related code.
+            - **entities**: Database entities.
+            - **factories**: Factories for creating database entities.
+            - **provider**: Database provider configuration.
+            - **seeders**: Database seeder scripts.
+            - **service**: Database services.
+        - **shared**: Shared infrastructure code.
+            - **config**: Configuration files and settings.
+- **test**: Contains test cases and test-related configurations.
 
 ## Installation
 
-```bash
-$ yarn install
+1. Clone the repository: 
+```sh
+   git clone https://github.com/your-username/your-repo.git
+```
+2. Navigate to the project directory: 
+```sh 
+cd your-repo
+```
+3. Install dependencies: 
+```sh 
+npm install 
+```
+4.Create a `.env` file in the root directory and add the following environment variables: 
+```sh 
+cp .env.example .env
+```
+5. Start the development server: 
+```bash 
+  npm run start:dev
 ```
 
-## Running the app
+## API Documentation
+You can find the API documentation [here](https://documenter.getpostman.com/view/16480692/2sA3rwMuDJ).
 
-```bash
-# development
-$ yarn run start
+To test the API endpoints, you can import the Postman collection located in the postman folder.
 
-# watch mode
-$ yarn run start:dev
+## Testing
+To run the tests, use the following command:
 
-# production mode
-$ yarn run start:prod
+```sh 
+
+npm run test
+
 ```
 
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+Test e2e with jest and supertest
+```sh
+npm run test:e2e
 ```
 
-## Support
+## Contact 
+If you have any questions or need support, please contact Jaime Ruiz.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
