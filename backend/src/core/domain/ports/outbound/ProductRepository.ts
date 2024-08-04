@@ -1,8 +1,9 @@
-import { ProductEntity } from '../../entities/product.entity';
+import { Product } from '../../entities/Product';
 
 export interface ProductRepository {
-  findById(id: number): Promise<ProductEntity>;
-  findAll(): Promise<ProductEntity[]>;
-  save(product: ProductEntity): Promise<ProductEntity>;
-  getNextId(): number;
+  findByIds(ids: number[]): Promise<Product[]>;
+  findAll(): Promise<Product[]>;
+  findById(id: number): Promise<Product>;
+  save(product: Product): Promise<Product>;
+  updateStock(id: number, quantity: number): Promise<Product>;
 }

@@ -1,12 +1,9 @@
-import { TransactionEntity } from '../../entities/transaction.entity';
+import { Transaction } from '../../entities/Transaction';
 import { StatusType } from '../../../shared/types/status.type';
 
 export interface TransactionService {
-  findById(id: number): Promise<TransactionEntity>;
-  findAll(): Promise<TransactionEntity[]>;
-  save(transaction: TransactionEntity): Promise<TransactionEntity>;
-  updateStatus(
-    transaction: TransactionEntity,
-    status: StatusType,
-  ): Promise<TransactionEntity>;
+  findById(id: number): Promise<Transaction>;
+  findAll(): Promise<Transaction[]>;
+  save(transaction: Transaction): Promise<number>;
+  updateStatus(transactionId: number, status: StatusType): Promise<void>;
 }

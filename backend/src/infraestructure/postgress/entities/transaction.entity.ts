@@ -2,46 +2,49 @@ import {
   Column,
   Entity,
   JoinTable,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { StatusType } from '../../../core/shared/types/status.type';
-import { ProductEntity } from './product.entity';
 import { CustomerEntity } from './customer.entity';
+import { CardEntity } from './card.entity';
+import { ProductEntity } from './product.entity';
+import { JoinColumn } from 'typeorm';
 
 @Entity({ name: 'transactions' })
 export class TransactionEntity {
   @PrimaryGeneratedColumn({ name: 'transaction_id' })
   transactionId: number;
-  @Column({ name: 'transaction_number' })
+  @Column({ name: 'transaction_number', primary: true })
   transactionNumber: string;
   @Column({
     name: 'status',
-    type: 'enum',
-    enum: StatusType,
-    default: StatusType.PENDING,
   })
   status: string;
   @Column({ name: 'amount' })
   amount: number;
   @Column({ name: 'date' })
   date: Date;
+  @Column({ name: 'number_units' })
+  numberUnits: number;
 
+  @Column({ name: 'customer_id' })
+  customerId: number;
+
+  @JoinColumn({ name: 'customer_id' })
   @ManyToOne(() => CustomerEntity, (customer) => customer.transactions)
   customer: CustomerEntity;
 
-  @ManyToMany(() => ProductEntity, (product) => product.transactions)
-  @JoinTable({
-    name: 'transaction_products',
-    joinColumn: {
-      name: 'transactionId',
-      referencedColumnName: 'transactionId',
-    },
-    inverseJoinColumn: {
-      name: 'productId',
-      referencedColumnName: 'productId',
-    },
-  })
-  products: ProductEntity[];
+  @Column({ name: 'product_id' })
+  productId: number;
+
+  @JoinColumn({ name: 'product_id' })
+  @ManyToOne(() => ProductEntity, (product) => product.transactions)
+  product: ProductEntity;
+
+  @Column({ name: 'card_id' })
+  cardId: number;
+
+  @ManyToOne(() => CardEntity, (card) => card.transactions)
+  @JoinTable()
+  card: CardEntity;
 }

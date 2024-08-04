@@ -1,7 +1,7 @@
-import { CustomerEntity } from '../../entities/customer.entity';
+import { Customer } from '../../entities/Customer';
 
 export interface CustomerRepository {
-  findById(id: number): Promise<CustomerEntity>;
-  findAll(): Promise<CustomerEntity[]>;
-  save(customer: CustomerEntity): Promise<CustomerEntity>;
+  save(customer: Customer): Promise<Customer>;
+  findById(id: number): Promise<Customer>;
+  findByEmail(email: string): Promise<Customer>;
 }

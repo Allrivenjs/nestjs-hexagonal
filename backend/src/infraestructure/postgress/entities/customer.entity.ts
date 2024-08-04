@@ -5,12 +5,15 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 export class CustomerEntity {
   @PrimaryGeneratedColumn({ name: 'customer_id' })
   customerId: number;
-  @Column({ name: 'first_name' })
-  firstName: string;
-  @Column({ name: 'last_name' })
-  lastName: string;
-  @Column({ name: 'email' })
+  @Column({ name: 'name' })
+  name: string;
+  @Column({ name: 'email', unique: true })
   email: string;
+  @Column({ name: 'phone' })
+  phone: string;
+  @Column({ name: 'address' })
+  address: string;
+
   @OneToMany(() => TransactionEntity, (transaction) => transaction.customer)
   transactions: TransactionEntity[];
 }

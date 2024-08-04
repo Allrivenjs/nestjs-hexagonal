@@ -1,24 +1,21 @@
 import { TransactionService } from '../ports/inbound/TransactionService';
-import { TransctionRepository } from '../ports/outbound/TransctionRepository';
-import { TransactionEntity } from '../entities/transaction.entity';
+import { TransactionRepository } from '../ports/outbound/TransactionRepository';
+import { Transaction } from '../entities/Transaction';
 import { StatusType } from '../../shared/types/status.type';
 
 export class TransactionDomainService implements TransactionService {
-  constructor(private repository: TransctionRepository) {}
-  findAll(): Promise<TransactionEntity[]> {
+  constructor(private repository: TransactionRepository) {}
+  findAll(): Promise<Transaction[]> {
     return this.repository.findAll();
   }
-  findById(id: number): Promise<TransactionEntity> {
+  findById(id: number): Promise<Transaction> {
     return this.repository.findById(id);
   }
-  updateStatus(
-    transaction: TransactionEntity,
-    status: StatusType,
-  ): Promise<TransactionEntity> {
-    return this.repository.updateStatus(transaction, status);
+  updateStatus(transactionId: number, status: StatusType): Promise<void> {
+    return this.repository.updateStatus(transactionId, status);
   }
 
-  save(transaction: TransactionEntity): Promise<TransactionEntity> {
+  save(transaction: Transaction): Promise<number> {
     return this.repository.save(transaction);
   }
 }

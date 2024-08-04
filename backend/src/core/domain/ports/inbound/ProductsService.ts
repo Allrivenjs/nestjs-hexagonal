@@ -1,9 +1,11 @@
-import { ProductEntity } from '../../entities/product.entity';
+import { Product } from '../../entities/Product';
 
 export interface ProductsService {
-  save(product: ProductEntity): Promise<ProductEntity>;
-  validateProductPrice(product: ProductEntity): boolean;
-  updateStock(product: ProductEntity, quantity: number): Promise<ProductEntity>;
-  findById(id: number): Promise<ProductEntity>;
-  validateProductStock(product: ProductEntity, quantity: number): boolean;
+  save(product: Product): Promise<Product>;
+  validateProductPrice(product: Product): boolean;
+  updateStock(id: number, quantity: number): Promise<Product>;
+  findByIds(ids: number[]): Promise<Product[]>;
+  findById(id: number): Promise<Product>;
+  findAll(): Promise<Product[]>;
+  validateProductStock(product: Product, quantity: number): boolean;
 }
