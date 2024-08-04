@@ -9,6 +9,7 @@ function CustomerRepositoryMock(): CustomerRepository {
   return {
     findById: jest.fn().mockReturnValue(Promise.resolve(customer)),
     save: jest.fn().mockReturnValue(Promise.resolve(customer)),
+    findByEmail: jest.fn().mockReturnValue(Promise.resolve(customer)),
   };
 }
 

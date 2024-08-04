@@ -45,7 +45,8 @@ export class TransactionController {
     const transactionId = await this.application.createTransaction(request);
     return {
       status: 201,
-      message: `Transaction(id=${transactionId}) created OK`,
+      message: `Transaction created OK`,
+      data: { IdTransaction: transactionId },
     };
   }
 
@@ -66,16 +67,6 @@ export class TransactionController {
       status: 200,
       message: `Transaction(id=${transactionId}) get OK`,
       data: transaction,
-    };
-  }
-
-  // endpoint got actulization of transaction
-  @Post('/result')
-  async resultTransaction(@Body() result: any): Promise<AppResponse> {
-    console.log('result', result);
-    return {
-      status: 200,
-      message: 'Transaction updated',
     };
   }
 }

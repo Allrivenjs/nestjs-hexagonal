@@ -14,6 +14,7 @@ function CustomerServiceMock(customer_id: number): CustomerService {
   return {
     save: jest.fn().mockReturnValue(Promise.resolve(customer)),
     findById: jest.fn().mockReturnValue(Promise.resolve(customer)),
+    findByEmail: jest.fn().mockReturnValue(Promise.resolve(customer)),
   };
 }
 

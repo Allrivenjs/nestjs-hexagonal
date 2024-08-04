@@ -3,7 +3,6 @@ import {
   Entity,
   JoinTable,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CustomerEntity } from './customer.entity';
@@ -44,7 +43,8 @@ export class TransactionEntity {
 
   @Column({ name: 'card_id' })
   cardId: number;
-  @OneToOne(() => CardEntity, (card) => card.transaction)
+
+  @ManyToOne(() => CardEntity, (card) => card.transactions)
   @JoinTable()
   card: CardEntity;
 }

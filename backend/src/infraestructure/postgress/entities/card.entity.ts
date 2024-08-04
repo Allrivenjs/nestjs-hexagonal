@@ -2,7 +2,7 @@ import {
   Column,
   Entity,
   JoinTable,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TransactionEntity } from './transaction.entity';
@@ -25,7 +25,7 @@ export class CardEntity {
   @Column({ name: 'installments' })
   installments: number;
 
-  @OneToOne(() => TransactionEntity, (transaction) => transaction.card)
+  @OneToMany(() => TransactionEntity, (transaction) => transaction.card)
   @JoinTable()
-  transaction: TransactionEntity;
+  transactions: TransactionEntity[];
 }

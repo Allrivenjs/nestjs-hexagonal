@@ -61,6 +61,7 @@ export class ProductController {
     const products = await this.application.findAll();
     return {
       status: 200,
+      message: 'Products found',
       data: products,
     };
   }

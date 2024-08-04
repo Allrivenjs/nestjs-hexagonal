@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CoreModule } from './core/core.module';
-import { InfrastructureModule } from './infraestructure/infraestructure.module';
+import { InfrastructureModule } from './infraestructure/infrastructure.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProductRepositoryAdapter } from './infraestructure/adapters/domain/product.repository.adapter';
 import { TransactionRepositoryAdapter } from './infraestructure/adapters/domain/transaction.repository.adapter';

@@ -19,8 +19,8 @@ export class ProductFactory {
     // Obtener una URL de imagen relacionada
     const imageUrl = await this.getImageUrl(productName);
     // Generar el resto de los datos del producto
-    const unitPrice = parseFloat(
-      faker.commerce.price({ min: 100000, max: 10000000 }),
+    const unitPrice = Number(
+      faker.commerce.price({ min: 100000, max: 1000000 }),
     );
     const unitsInStock = faker.number.int({ min: 0, max: 100 });
 

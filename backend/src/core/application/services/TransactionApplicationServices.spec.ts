@@ -25,6 +25,7 @@ function ProductServiceMock(productId: number): ProductsService {
   const product = {
     productId,
     productName: 'Chocolate',
+    unitPrice: 100000000,
   } as Product;
 
   return {
@@ -52,7 +53,7 @@ function TransactionServiceMock(transactionId: number): TransactionService {
   const transaction = {
     transactionId,
     date: new Date(),
-    amount: 10,
+    amount: 100000000,
     status: StatusType.PENDING,
   } as Transaction;
   return {
@@ -74,12 +75,14 @@ function CustomerServiceMock(customer_id: number): CustomerService {
   return {
     save: jest.fn().mockReturnValue(Promise.resolve(customer)),
     findById: jest.fn().mockReturnValue(Promise.resolve(customer)),
+    findByEmail: jest.fn().mockReturnValue(Promise.resolve(customer)),
   };
 }
 
 function CardRepositoryMock(): CardRepository {
   return {
     save: jest.fn().mockReturnValue(Promise.resolve(new Card())),
+    findBy: jest.fn().mockReturnValue(Promise.resolve(new Card())),
   };
 }
 

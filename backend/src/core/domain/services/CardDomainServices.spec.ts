@@ -5,6 +5,7 @@ import { CardDomainServices } from './CardDomainServices';
 function CardRepositoryMock(): CardRepository {
   return {
     save: jest.fn().mockReturnValue(Promise.resolve(new Card())),
+    findBy: jest.fn().mockReturnValue(Promise.resolve(new Card())),
   };
 }
 

@@ -89,9 +89,12 @@ export class TransactionApplicationService implements TransactionApplication {
       throw new HttpException('Error creating card ' + error, 500);
     }
 
+    let amount = transaction.amount;
+    // add 00 for cents
+    amount = amount * 100;
     const payment = await this.payment.createTransaction(
       transaction.card,
-      transaction.amount,
+      amount,
     );
 
     const transactionNumber = payment.data.id;
@@ -116,12 +119,11 @@ export class TransactionApplicationService implements TransactionApplication {
         card,
         status,
       );
-      console.log(entity);
       saved = await this.transaction.save(entity);
     } catch (error) {
       throw new HttpException('Error creating transaction ' + error, 500);
     }
-
+    // find transaction by id
     return saved;
   }
 
@@ -138,10 +140,11 @@ export class TransactionApplicationService implements TransactionApplication {
     const paymentStatus = await this.payment.checkTransaction(
       transaction.transactionNumber,
     );
-
+    console.log(paymentStatus.data);
     const statusRequest = paymentStatus.data.status;
     if (statusRequest === 'APPROVED') {
       await this.updateStatus(transactionId, StatusType.APPROVED);
+      transaction.status = StatusType.APPROVED;
       //update stock of product
       const product = await this.product.findById(
         transaction.product.productId,
@@ -150,6 +153,7 @@ export class TransactionApplicationService implements TransactionApplication {
       await this.product.updateStock(product.productId, unitsInStock);
     } else {
       await this.updateStatus(transactionId, StatusType.CANCELLED);
+      transaction.status = StatusType.CANCELLED;
     }
     return transaction;
   }
