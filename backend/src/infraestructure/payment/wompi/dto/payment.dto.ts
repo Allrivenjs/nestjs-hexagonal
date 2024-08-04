@@ -12,6 +12,7 @@ export class PaymentDto {
   acceptance_token: string;
   customer_email: string;
   signature: string;
+  redirect_url: string;
 
   constructor(payment: PaymentEntity) {
     this.currency = payment.currency;
@@ -21,6 +22,7 @@ export class PaymentDto {
     this.acceptance_token = payment.acceptance_token;
     this.customer_email = payment.customer_email;
     this.signature = payment.signature;
+    this.redirect_url = payment.redirect_url ?? '';
   }
 
   static newChargeDto(charge: PaymentEntity): PaymentDto {
@@ -36,6 +38,7 @@ export class PaymentDto {
       acceptance_token: this.acceptance_token,
       customer_email: this.customer_email,
       signature: this.signature,
+      ...(this.redirect_url && { redirect_url: this.redirect_url }),
     };
   }
 }

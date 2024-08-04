@@ -1,13 +1,10 @@
-import { TransactionEntity } from './transaction.entity';
-
-export class ProductEntity {
+export class Product {
   productId: number;
   productName: string;
   productDescription: string;
   imageUrl: string;
   unitPrice: number;
   unitsInStock: number;
-  transactions?: TransactionEntity[];
 
   static create(
     name: string,
@@ -15,13 +12,12 @@ export class ProductEntity {
     imageUrl: string,
     stock: number,
     price: number,
-  ): ProductEntity {
-    const product = new ProductEntity();
+  ): Product {
+    const product = new Product();
     product.productName = name;
     product.productDescription = description;
     product.unitPrice = price;
     product.unitsInStock = stock;
-    product.transactions = [];
     product.imageUrl = imageUrl;
 
     return product;

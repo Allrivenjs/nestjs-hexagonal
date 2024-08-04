@@ -19,7 +19,8 @@ import { ProductApplication } from '../../../core/application/ProductApplication
 import { AppResponse } from '../model/app.response';
 import { CreateProductRequest } from '../model/create-product.request';
 import { Log } from '../../shared/Log';
-import { ProductSeeder } from '../../postgress/seeders/ProductSeeder';
+import { GenerateFakeRequest } from '../model/generate-fake.request';
+import { ProductService } from '../../postgress/service/ProductService';
 
 @ApiTags('Products')
 @Controller('/product')
@@ -60,6 +61,7 @@ export class ProductController {
     const products = await this.application.findAll();
     return {
       status: 200,
+      message: 'Products found',
       data: products,
     };
   }
@@ -71,13 +73,16 @@ export class ProductController {
     description: 'The record has been successfully created.',
     type: AppResponse,
   })
-  async generateFakeProducts(@Body('count') count: number) {
-    console.log(`(POST) Generate fake products count=${count}`);
+  async generateFakeProducts(@Body() request: GenerateFakeRequest) {
+    const count = request.count;
     Log.info(`(POST) Generate fake products count=${count}`);
-    const products = await ProductSeeder.run(count);
-    console.log(products);
-    return Promise.all(
-      products.map((product) => this.application.createProduct(product)),
-    );
+    const products = await new ProductService(
+      this.application,
+    ).generateAndSaveFakeProducts(count);
+    return {
+      status: 201,
+      message: `Generated ${count} products`,
+      data: products,
+    };
   }
 }

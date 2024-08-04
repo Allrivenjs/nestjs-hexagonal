@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from '../shared/config/database.config';
 import { ProductEntity } from './entities/product.entity';
 import { TransactionEntity } from './entities/transaction.entity';
+import { CustomerEntity } from './entities/customer.entity';
+import { CardEntity } from './entities/card.entity';
+import { TransactionProvider } from './provider/transaction.provider';
 
 @Module({
   imports: [
@@ -19,12 +22,19 @@ import { TransactionEntity } from './entities/transaction.entity';
           password: database.password,
           database: database.name,
           synchronize: true,
-          entities: [TransactionEntity, ProductEntity],
+          entities: [
+            TransactionEntity,
+            ProductEntity,
+            CustomerEntity,
+            CardEntity,
+          ],
           logging: ['query'],
         };
       },
       inject: [ConfigService],
     }),
   ],
+  providers: [TransactionProvider],
+  exports: [TransactionProvider],
 })
 export class PostgressModule {}

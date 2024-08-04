@@ -8,7 +8,6 @@ export class ProductSeeder {
 
     for (let i = 0; i < count; i++) {
       const product = await new ProductFactory(new HttpService()).definition();
-      console.log(product);
       products.push(product);
     }
     return products;

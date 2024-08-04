@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { TransactionEntity } from './transaction.entity';
 
 @Entity({ name: 'products' })
@@ -15,6 +15,7 @@ export class ProductEntity {
   unitPrice: number;
   @Column({ name: 'units_in_stock' })
   unitsInStock: number;
-  @ManyToMany(() => TransactionEntity, (transaction) => transaction.products)
+
+  @OneToMany(() => TransactionEntity, (transaction) => transaction.product)
   transactions: TransactionEntity[];
 }
