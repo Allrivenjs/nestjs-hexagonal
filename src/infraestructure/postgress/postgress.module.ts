@@ -22,7 +22,10 @@ import { DeliveryEntity } from './entities/delivery.entity';
           username: database.user,
           password: database.password,
           database: database.name,
-          synchronize: false,
+          synchronize: true,
+          ssl: {
+            rejectUnauthorized: false,
+          },
           entities: [
             TransactionEntity,
             ProductEntity,
@@ -31,7 +34,6 @@ import { DeliveryEntity } from './entities/delivery.entity';
             DeliveryEntity,
           ],
           logging: ['query'],
-          encrypt: false,
         };
       },
       inject: [ConfigService],
