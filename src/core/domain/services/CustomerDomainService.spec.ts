@@ -29,7 +29,6 @@ describe('CustomerDomainService', () => {
     await services.save({
       name: 'Test',
       email: 'test@gmail.com',
-      address: 'Test',
       phone: '123456789',
     } as Customer);
     expect(repositoryMock.save).toHaveBeenCalled();

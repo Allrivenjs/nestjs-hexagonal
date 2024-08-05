@@ -20,9 +20,7 @@ describe('DeliveryDomainService', () => {
       address: 'Calle 123',
       city: 'Bogotá',
       state: 'Colombia',
-      customerId: 1,
       status: 'pending',
-      transactionId: 1,
       zipCode: '110221',
     } as Delivery);
     expect(repositoryMock.save).toHaveBeenCalled();

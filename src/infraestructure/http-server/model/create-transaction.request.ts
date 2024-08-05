@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateCustomerDto } from '../../../core/shared/dto/create-customer.dto';
 import { CardDto } from '../../payment/wompi/dto/card.dto';
+import { CreateDeliveryDto } from '../../../core/shared/dto/create-delivery.dto';
 
 export class CreateTransactionRequest {
   @ApiProperty({
@@ -28,14 +29,12 @@ export class CreateTransactionRequest {
       name: 'John Doe',
       email: 'test@gmail.com',
       phone: '3000000000',
-      address: 'Calle 123',
     },
   })
   customer: {
     name: string;
     email: string;
     phone: string;
-    address: string;
   };
 
   @ApiProperty({
@@ -57,6 +56,24 @@ export class CreateTransactionRequest {
     cvc: string;
     card_holder: string;
     installments: number;
+  };
+
+  @ApiProperty({
+    name: 'delivery',
+    description: 'Delivery',
+    type: CreateDeliveryDto,
+    example: {
+      city: 'Bogotá',
+      address: 'Calle 123',
+      zipCode: '110111',
+      state: 'Cundinamarca',
+    },
+  })
+  delivery: {
+    city: string;
+    address: string;
+    zipCode: string;
+    state: string;
   };
 
   @ApiProperty({

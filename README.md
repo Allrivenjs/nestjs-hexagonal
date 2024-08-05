@@ -91,6 +91,12 @@ The project structure has been set up for you. Below is an overview of the folde
             - **config**: Configuration files and settings.
 - **test**: Contains test cases and test-related configurations.
 
+## Model DataBase
+![alt text](./img/Database.png)
+
+
+
+
 ## Installation
 
 1. Clone the repository: 

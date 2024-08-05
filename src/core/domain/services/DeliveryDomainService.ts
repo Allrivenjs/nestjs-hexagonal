@@ -12,5 +12,4 @@ export class DeliveryDomainService implements DeliveryService {
   async save(delivery: any): Promise<Delivery> {
     return this.repository.save(delivery);
   }
-
 }

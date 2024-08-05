@@ -7,6 +7,7 @@ import { TransactionEntity } from './entities/transaction.entity';
 import { CustomerEntity } from './entities/customer.entity';
 import { CardEntity } from './entities/card.entity';
 import { TransactionProvider } from './provider/transaction.provider';
+import { DeliveryEntity } from './entities/delivery.entity';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TransactionProvider } from './provider/transaction.provider';
             ProductEntity,
             CustomerEntity,
             CardEntity,
+            DeliveryEntity,
           ],
           logging: ['query'],
         };

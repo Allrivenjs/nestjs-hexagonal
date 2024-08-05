@@ -13,7 +13,6 @@ export class CustomerApplicationServices implements CustomerApplication {
       customer.name,
       customer.email,
       customer.phone,
-      customer.address,
     );
     const saved = await this.customer.save(entity);
     return saved.customerId;

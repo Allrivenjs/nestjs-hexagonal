@@ -13,6 +13,8 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import { CardRepository } from '../../domain/ports/outbound/CardRepository';
 import { Card } from '../../domain/entities/Card';
+import { DeliveryRepository } from "../../domain/ports/outbound/DeliveryRepository";
+import { Delivery } from "../../domain/entities/Delivery";
 
 beforeAll(() => {
   ConfigModule.forRoot({
@@ -86,6 +88,13 @@ function CardRepositoryMock(): CardRepository {
   };
 }
 
+function DeliveryRepositoryMock(): DeliveryRepository {
+  return {
+    save: jest.fn().mockReturnValue(Promise.resolve(new Delivery())),
+    findById: jest.fn().mockReturnValue(Promise.resolve(new Delivery())),
+  };
+}
+
 const card = CardDto.newCardDto({
   number: '4242424242424242',
   exp_month: '08',
@@ -103,11 +112,13 @@ describe('TransactionApplicationService', () => {
     const productMock = ProductServiceMock(1);
     const customerMock = CustomerServiceMock(1);
     const cardMock = CardRepositoryMock();
+    const deliveryMock = DeliveryRepositoryMock();
     service = new TransactionApplicationService(
       transactionMock,
       productMock,
       customerMock,
       cardMock,
+      deliveryMock,
       new HttpService(),
     );
 
@@ -119,9 +130,14 @@ describe('TransactionApplicationService', () => {
       card: card,
       customer: {
         name: 'John Doe',
-        address: '123 Main St',
         phone: '123-456-7890',
         email: 'test@gmail.com',
+      },
+      delivery:{
+        address: '123 Main St',
+        city: 'Bogotá',
+        state: 'Colombia',
+        zipCode: '110221',
       },
       numberUnits: 1,
     } as CreateTransactionDto);
@@ -135,11 +151,13 @@ describe('TransactionApplicationService', () => {
     const productMock = ProductServiceMock(1);
     const customerMock = CustomerServiceMock(1);
     const cardMock = CardRepositoryMock();
+    const deliveryMock = DeliveryRepositoryMock();
     service = new TransactionApplicationService(
       transactionMock,
       productMock,
       customerMock,
       cardMock,
+      deliveryMock,
       new HttpService(),
     );
     await service.updateStatus(1, StatusType.APPROVED);

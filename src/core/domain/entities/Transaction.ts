@@ -2,6 +2,7 @@ import { StatusType } from '../../shared/types/status.type';
 import { Product } from './Product';
 import { Customer } from './Customer';
 import { Card } from './Card';
+import { Delivery } from './Delivery';
 
 export class Transaction {
   transactionId: number;
@@ -13,6 +14,7 @@ export class Transaction {
   product: Product;
   customer: Customer;
   card: Card;
+  delivery: Delivery;
 
   static create(
     transactionNumber: string,
@@ -22,6 +24,7 @@ export class Transaction {
     product: Product,
     customer: Customer,
     card: Card,
+    delivery: Delivery,
     status?: StatusType,
   ): Transaction {
     const transaction = new Transaction();
@@ -33,6 +36,7 @@ export class Transaction {
     transaction.numberUnits = numberUnits;
     transaction.customer = customer;
     transaction.card = card;
+    transaction.delivery = delivery;
     return transaction;
   }
 }

@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { CustomerEntity } from './customer.entity';
 import { CardEntity } from './card.entity';
 import { ProductEntity } from './product.entity';
@@ -47,6 +53,6 @@ export class TransactionEntity {
   deliveryId: number;
 
   @JoinColumn({ name: 'delivery_id' })
-  @ManyToOne(() => DeliveryEntity, (delivery) => delivery.transaction)
+  @OneToOne(() => DeliveryEntity)
   delivery: DeliveryEntity;
 }

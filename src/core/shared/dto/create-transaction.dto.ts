@@ -1,6 +1,7 @@
 import { IsInt, Min, IsNotEmpty, IsDate, IsOptional } from 'class-validator';
 import { CardDto } from '../../../infraestructure/payment/wompi/dto/card.dto';
 import { CreateCustomerDto } from './create-customer.dto';
+import { CreateDeliveryDto } from './create-delivery.dto';
 
 export class CreateTransactionDto {
   @IsNotEmpty()
@@ -21,10 +22,12 @@ export class CreateTransactionDto {
   @IsInt()
   productId: number;
 
-  @IsOptional()
-  @IsInt()
+  @IsNotEmpty()
   customer: CreateCustomerDto;
 
   @IsNotEmpty()
   card: CardDto;
+
+  @IsNotEmpty()
+  delivery: CreateDeliveryDto;
 }
