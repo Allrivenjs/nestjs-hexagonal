@@ -22,7 +22,7 @@ import { DeliveryEntity } from './entities/delivery.entity';
           username: database.user,
           password: database.password,
           database: database.name,
-          synchronize: true,
+          synchronize: false,
           entities: [
             TransactionEntity,
             ProductEntity,
