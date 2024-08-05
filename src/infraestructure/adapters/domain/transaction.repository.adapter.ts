@@ -23,6 +23,15 @@ export class TransactionRepositoryAdapter implements TransactionRepository {
   }
 
   findById(id: number): Promise<Transaction> {
+    console.log(
+      this.repository
+        .createQueryBuilder('transaction')
+        .leftJoinAndSelect('transaction.product', 'product')
+        .leftJoinAndSelect('transaction.customer', 'customer')
+        .leftJoinAndSelect('transaction.card', 'card')
+        .where('transaction.transactionId = :id', { id })
+        .getQuery(),
+    );
     return this.repository
       .createQueryBuilder('transaction')
       .leftJoinAndSelect('transaction.product', 'product')

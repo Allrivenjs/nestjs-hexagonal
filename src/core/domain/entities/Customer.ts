@@ -3,19 +3,12 @@ export class Customer {
   name: string;
   email: string;
   phone: string;
-  address: string;
 
-  static create(
-    name: string,
-    email: string,
-    phone: string,
-    address: string,
-  ): Customer {
+  static create(name: string, email: string, phone: string): Customer {
     const customer = new Customer();
     customer.name = name;
     customer.email = email;
     customer.phone = phone;
-    customer.address = address;
     return customer;
   }
 }
