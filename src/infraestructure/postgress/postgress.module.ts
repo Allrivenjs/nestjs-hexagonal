@@ -31,6 +31,7 @@ import { DeliveryEntity } from './entities/delivery.entity';
             DeliveryEntity,
           ],
           logging: ['query'],
+          encrypt: false,
         };
       },
       inject: [ConfigService],
