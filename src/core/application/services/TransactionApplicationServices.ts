@@ -14,6 +14,7 @@ import { Card } from '../../domain/entities/Card';
 import { Customer } from '../../domain/entities/Customer';
 import { Delivery } from '../../domain/entities/Delivery';
 import { DeliveryService } from '../../domain/ports/inbound/DeliveryService';
+import { detectCardType } from '../../shared/getTypeCard';
 
 @Injectable()
 export class TransactionApplicationService implements TransactionApplication {
@@ -74,6 +75,7 @@ export class TransactionApplicationService implements TransactionApplication {
         transaction.card.cvc,
         transaction.card.card_holder,
         transaction.card.installments,
+        detectCardType(transaction.card.number),
       );
 
       // validate if card exists
@@ -158,7 +160,6 @@ export class TransactionApplicationService implements TransactionApplication {
     const paymentStatus = await this.payment.checkTransaction(
       transaction.transactionNumber,
     );
-    console.log(paymentStatus.data);
     const statusRequest = paymentStatus.data.status;
     if (statusRequest === 'APPROVED') {
       await this.updateStatus(transactionId, StatusType.APPROVED);
@@ -173,6 +174,12 @@ export class TransactionApplicationService implements TransactionApplication {
       await this.updateStatus(transactionId, StatusType.CANCELLED);
       transaction.status = StatusType.CANCELLED;
     }
+    // modific number of cards to show only last 4 digits, and add **** to the rest
+    transaction.card.number = transaction.card.number.slice(-4);
+
+    // remove cvc
+    delete transaction.card.cvc;
+
     return transaction;
   }
 }

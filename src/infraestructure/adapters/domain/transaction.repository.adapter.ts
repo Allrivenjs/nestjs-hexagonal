@@ -43,6 +43,7 @@ export class TransactionRepositoryAdapter implements TransactionRepository {
       productId: transaction.product.productId,
       customerId: transaction.customer.customerId,
       cardId: transaction.card.cardId,
+      deliveryId: transaction.delivery.deliveryId,
     };
     let transactionId = 0;
 
