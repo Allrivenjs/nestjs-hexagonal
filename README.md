@@ -113,7 +113,7 @@ npm install
 ```
 4.Create a `.env` file in the root directory and add the following environment variables: 
 ```sh 
-cp .env.example .env
+cat .env.example .env
 ```
 5. Start the development server: 
 ```bash 
