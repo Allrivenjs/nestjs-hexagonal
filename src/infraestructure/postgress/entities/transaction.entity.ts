@@ -1,14 +1,15 @@
 import {
   Column,
   Entity,
-  JoinTable,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CustomerEntity } from './customer.entity';
 import { CardEntity } from './card.entity';
 import { ProductEntity } from './product.entity';
 import { JoinColumn } from 'typeorm';
+import { DeliveryEntity } from './delivery.entity';
 
 @Entity({ name: 'transactions' })
 export class TransactionEntity {
@@ -44,7 +45,14 @@ export class TransactionEntity {
   @Column({ name: 'card_id' })
   cardId: number;
 
+  @JoinColumn({ name: 'card_id' })
   @ManyToOne(() => CardEntity, (card) => card.transactions)
-  @JoinTable()
   card: CardEntity;
+
+  @Column({ name: 'delivery_id' })
+  deliveryId: number;
+
+  @JoinColumn({ name: 'delivery_id' })
+  @OneToOne(() => DeliveryEntity)
+  delivery: DeliveryEntity;
 }

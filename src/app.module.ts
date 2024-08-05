@@ -7,6 +7,7 @@ import { TransactionRepositoryAdapter } from './infraestructure/adapters/domain/
 import { SharedModule } from './infraestructure/shared/shared.module';
 import { CardRepositoryAdapter } from './infraestructure/adapters/domain/card.repository.adapter';
 import { CustomerRepositoryAdapter } from './infraestructure/adapters/domain/customer.repository.adapter';
+import { DeliveryRepositoryAdapter } from './infraestructure/adapters/domain/delivery.repository.adapter';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CustomerRepositoryAdapter } from './infraestructure/adapters/domain/cus
         transactionRepository: TransactionRepositoryAdapter,
         cardRepository: CardRepositoryAdapter,
         customerRepository: CustomerRepositoryAdapter,
+        deliveryRepository: DeliveryRepositoryAdapter,
       },
     }),
     InfrastructureModule,

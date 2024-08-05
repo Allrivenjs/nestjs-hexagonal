@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Mapper } from '../../../core/shared/Mapper';
 import { TransactionEntity } from '../../postgress/entities/transaction.entity';
 import { Transaction } from '../../../core/domain/entities/Transaction';
+import { Card } from "../../../core/domain/entities/Card";
 
 @Injectable()
 export class TransactionMapper
@@ -22,7 +23,8 @@ export class TransactionMapper
       cvc: entity.card.cvc,
       installments: entity.card.installments,
       card_holder: entity.card.card_holder,
-    };
+      type: entity.card.type,
+    } as Card;
     transaction.status = entity.status;
     transaction.amount = entity.amount;
     transaction.transactionNumber = entity.transactionNumber;

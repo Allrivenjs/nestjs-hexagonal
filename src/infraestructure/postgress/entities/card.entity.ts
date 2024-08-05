@@ -17,7 +17,8 @@ export class CardEntity {
   exp_month: string;
   @Column({ name: 'exp_year' })
   exp_year: string;
-
+  @Column({ name: 'type' })
+  type: string;
   @Column({ name: 'cvc' })
   cvc: string;
   @Column({ name: 'card_holder' })

@@ -12,6 +12,9 @@ import { HttpService } from '@nestjs/axios';
 import { CardService } from '../../domain/ports/inbound/CardService';
 import { Card } from '../../domain/entities/Card';
 import { Customer } from '../../domain/entities/Customer';
+import { Delivery } from '../../domain/entities/Delivery';
+import { DeliveryService } from '../../domain/ports/inbound/DeliveryService';
+import { detectCardType } from '../../shared/getTypeCard';
 
 @Injectable()
 export class TransactionApplicationService implements TransactionApplication {
@@ -21,6 +24,7 @@ export class TransactionApplicationService implements TransactionApplication {
     private product: ProductsService,
     private customer: CustomerService,
     private card: CardService,
+    private delivery: DeliveryService,
     httpService: HttpService,
   ) {
     this.payment = new PaymentDomainService(httpService);
@@ -47,7 +51,6 @@ export class TransactionApplicationService implements TransactionApplication {
         transaction.customer.name,
         transaction.customer.email,
         transaction.customer.phone,
-        transaction.customer.address,
       );
 
       // validate if customer exists
@@ -72,6 +75,7 @@ export class TransactionApplicationService implements TransactionApplication {
         transaction.card.cvc,
         transaction.card.card_holder,
         transaction.card.installments,
+        detectCardType(transaction.card.number),
       );
 
       // validate if card exists
@@ -107,6 +111,21 @@ export class TransactionApplicationService implements TransactionApplication {
       status = StatusType.CANCELLED;
     }
 
+    let delivery: Delivery;
+
+    try {
+      const deliveryEntity = Delivery.create(
+        'PENDING',
+        transaction.delivery.city,
+        transaction.delivery.address,
+        transaction.delivery.zipCode,
+        transaction.delivery.state,
+        customer,
+      );
+
+      delivery = await this.delivery.save(deliveryEntity);
+    } catch (e) {}
+
     let saved: number;
     try {
       const entity = Transaction.create(
@@ -117,6 +136,7 @@ export class TransactionApplicationService implements TransactionApplication {
         product,
         customer,
         card,
+        delivery,
         status,
       );
       saved = await this.transaction.save(entity);
@@ -140,7 +160,6 @@ export class TransactionApplicationService implements TransactionApplication {
     const paymentStatus = await this.payment.checkTransaction(
       transaction.transactionNumber,
     );
-    console.log(paymentStatus.data);
     const statusRequest = paymentStatus.data.status;
     if (statusRequest === 'APPROVED') {
       await this.updateStatus(transactionId, StatusType.APPROVED);
@@ -155,6 +174,12 @@ export class TransactionApplicationService implements TransactionApplication {
       await this.updateStatus(transactionId, StatusType.CANCELLED);
       transaction.status = StatusType.CANCELLED;
     }
+    // modific number of cards to show only last 4 digits, and add **** to the rest
+    transaction.card.number = transaction.card.number.slice(-4);
+
+    // remove cvc
+    delete transaction.card.cvc;
+
     return transaction;
   }
 }

@@ -14,6 +14,9 @@ import { CustomerDomainService } from './domain/services/CustomerDomainService';
 import { CardDomainServices } from './domain/services/CardDomainServices';
 import { CustomerApplicationServices } from './application/services/CustomerApplicationServices';
 import { CardApplicationServices } from './application/services/CardApplicationServices';
+import { DeliveryRepository } from './domain/ports/outbound/DeliveryRepository';
+import { DeliveryDomainService } from './domain/services/DeliveryDomainService';
+import { DeliveryApplicationServices } from './application/services/DeliveryApplicationServices';
 
 /**
  * Options for core module
@@ -25,6 +28,7 @@ export type CoreModuleOptions = {
     transactionRepository: Type<TransactionRepository>;
     customerRepository: Type<CustomerRepository>;
     cardRepository: Type<CardRepository>;
+    deliveryRepository: Type<DeliveryRepository>;
   };
 };
 
@@ -35,11 +39,13 @@ export const PRODUCT_APPLICATION = 'PRODUCT_APPLICATION';
 export const TRANSACTION_APPLICATION = 'TRANSACTION_APPLICATION';
 export const CUSTOMER_APPLICATION = 'CUSTOMER_APPLICATION';
 export const CARD_APPLICATION = 'CARD_APPLICATION';
+export const DELIVERY_APPLICATION = 'DELIVERY_APPLICATION';
 
 export const CUSTOMER_SERVICE = 'CUSTOMER_SERVICE';
 export const CARD_SERVICE = 'CARD_SERVICE';
 export const PRODUCT_SERVICE = 'PRODUCT_SERVICE';
 export const TRANSACTION_SERVICE = 'TRANSACTION_SERVICE';
+export const DELIVERY_SERVICE = 'DELIVERY_SERVICE';
 
 @Module({})
 export class CoreModule {
@@ -49,14 +55,31 @@ export class CoreModule {
       transactionRepository,
       customerRepository,
       cardRepository,
+      deliveryRepository,
     } = adapters;
+
+    const DeliveryApplicationProvider = {
+      provide: DELIVERY_APPLICATION,
+      useFactory(repository: DeliveryRepository) {
+        return new DeliveryApplicationServices(repository);
+      },
+      inject: [DELIVERY_SERVICE],
+    };
 
     const CardApplicationProvider = {
       provide: CARD_APPLICATION,
-      useFactory(card: CardRepository) {
-        return new CardApplicationServices(card);
+      useFactory(repository: CardRepository) {
+        return new CardApplicationServices(repository);
       },
       inject: [CARD_SERVICE],
+    };
+
+    const DeliveryServiceProvider = {
+      provide: DELIVERY_SERVICE,
+      useFactory(repository: DeliveryRepository) {
+        return new DeliveryDomainService(repository);
+      },
+      inject: [deliveryRepository],
     };
 
     const ProductServiceProvider = {
@@ -106,12 +129,14 @@ export class CoreModule {
         product: ProductsService,
         customer: CustomerRepository,
         card: CardRepository,
+        delivery: DeliveryRepository,
       ) {
         return new TransactionApplicationService(
           transaction,
           product,
           customer,
           card,
+          delivery,
           new HttpService(),
         );
       },
@@ -120,6 +145,7 @@ export class CoreModule {
         PRODUCT_SERVICE,
         CUSTOMER_SERVICE,
         CARD_SERVICE,
+        DELIVERY_SERVICE,
       ],
     };
 
@@ -139,17 +165,20 @@ export class CoreModule {
         CustomerApplicationProvider,
         ProductApplicationProvider,
         TransactionApplicationProvider,
+        DeliveryApplicationProvider,
         CardApplicationProvider,
         ProductServiceProvider,
         TransactionServiceProvider,
         CustomerServiceProvider,
         CardServiceProvider,
+        DeliveryServiceProvider,
       ],
       exports: [
         PRODUCT_APPLICATION,
         TRANSACTION_APPLICATION,
         CUSTOMER_APPLICATION,
         CARD_APPLICATION,
+        DELIVERY_APPLICATION,
       ],
     };
   }

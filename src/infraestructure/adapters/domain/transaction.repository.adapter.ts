@@ -28,6 +28,7 @@ export class TransactionRepositoryAdapter implements TransactionRepository {
       .leftJoinAndSelect('transaction.product', 'product')
       .leftJoinAndSelect('transaction.customer', 'customer')
       .leftJoinAndSelect('transaction.card', 'card')
+      .leftJoinAndSelect('transaction.delivery', 'delivery')
       .where('transaction.transactionId = :id', { id })
       .getOne();
   }
@@ -42,6 +43,7 @@ export class TransactionRepositoryAdapter implements TransactionRepository {
       productId: transaction.product.productId,
       customerId: transaction.customer.customerId,
       cardId: transaction.card.cardId,
+      deliveryId: transaction.delivery.deliveryId,
     };
     let transactionId = 0;
 

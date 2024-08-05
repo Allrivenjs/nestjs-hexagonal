@@ -41,7 +41,6 @@ describe('TransactionController (e2e)', () => {
         name: 'John Doe',
         email: 'test@gmail.com',
         phone: '3000000000',
-        address: 'Calle 123',
       },
       card: {
         number: '4242424242424242',
@@ -50,6 +49,12 @@ describe('TransactionController (e2e)', () => {
         cvc: '123',
         card_holder: 'José Pérez',
         installments: 1,
+      },
+      delivery: {
+        city: 'Bogotá',
+        address: 'Calle 123',
+        zipCode: '110111',
+        state: 'Cundinamarca',
       },
       date: new Date(),
       numberUnits: 1,
@@ -90,7 +95,6 @@ describe('TransactionController (e2e)', () => {
         name: 'John Doe',
         email: 'test@gmail.com',
         phone: '3000000000',
-        address: 'Calle 123',
       },
       card: {
         number: '4242424242424242',
@@ -99,6 +103,12 @@ describe('TransactionController (e2e)', () => {
         cvc: '123',
         card_holder: 'José Pérez',
         installments: 1,
+      },
+      delivery: {
+        city: 'Bogotá',
+        address: 'Calle 123',
+        zipCode: '110111',
+        state: 'Cundinamarca',
       },
       date: new Date(),
       numberUnits: 1,

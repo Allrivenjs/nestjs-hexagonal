@@ -1,5 +1,6 @@
 import { TransactionEntity } from './transaction.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { DeliveryEntity } from './delivery.entity';
 
 @Entity({ name: 'customers' })
 export class CustomerEntity {
@@ -11,9 +12,10 @@ export class CustomerEntity {
   email: string;
   @Column({ name: 'phone' })
   phone: string;
-  @Column({ name: 'address' })
-  address: string;
 
   @OneToMany(() => TransactionEntity, (transaction) => transaction.customer)
   transactions: TransactionEntity[];
+
+  @OneToMany(() => DeliveryEntity, (delivery) => delivery.customer)
+  deliveries: DeliveryEntity[];
 }

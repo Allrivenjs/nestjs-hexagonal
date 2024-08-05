@@ -10,6 +10,8 @@ import { CustomerRepositoryAdapter } from './adapters/domain/customer.repository
 import { CardRepositoryAdapter } from './adapters/domain/card.repository.adapter';
 import { CardEntity } from './postgress/entities/card.entity';
 import { CustomerEntity } from './postgress/entities/customer.entity';
+import { DeliveryRepositoryAdapter } from './adapters/domain/delivery.repository.adapter';
+import { DeliveryEntity } from './postgress/entities/delivery.entity';
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { CustomerEntity } from './postgress/entities/customer.entity';
       TransactionEntity,
       CardEntity,
       CustomerEntity,
+      DeliveryEntity,
     ]),
   ],
   providers: [
@@ -27,12 +30,14 @@ import { CustomerEntity } from './postgress/entities/customer.entity';
     TransactionRepositoryAdapter,
     CustomerRepositoryAdapter,
     CardRepositoryAdapter,
+    DeliveryRepositoryAdapter,
   ],
   exports: [
     ProductRepositoryAdapter,
     TransactionRepositoryAdapter,
     CustomerRepositoryAdapter,
     CardRepositoryAdapter,
+    DeliveryRepositoryAdapter,
   ],
 })
 export class InfrastructureModule {}
