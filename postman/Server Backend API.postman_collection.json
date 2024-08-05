@@ -92,7 +92,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"amount\": 835526,\r\n  \"productId\": 3,\r\n  \"customer\": {\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"phone\": \"3000000000\"\r\n  },\r\n  \"card\": {\r\n     \"number\": \"4242424242424242\",\r\n     \"exp_month\": \"08\",\r\n     \"exp_year\": \"28\",\r\n     \"cvc\": \"123\",\r\n     \"card_holder\": \"José Pérez\",\r\n     \"installments\": 1\r\n  },\r\n  \"delivery\": {\r\n        \"city\": \"Bogotá\",\r\n        \"address\": \"Calle 123\",\r\n        \"zipCode\": \"110111\",\r\n        \"state\": \"Cundinamarca\"\r\n      },\r\n  \"date\": \"2024-08-03T21:16:04.907Z\",\r\n  \"numberUnits\": 1\r\n}",
+							"raw": "{\r\n  \"amount\": 255449,\r\n  \"productId\": 1,\r\n  \"customer\": {\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"phone\": \"3000000000\"\r\n  },\r\n  \"card\": {\r\n     \"number\": \"4242424242424242\",\r\n     \"exp_month\": \"08\",\r\n     \"exp_year\": \"28\",\r\n     \"cvc\": \"123\",\r\n     \"card_holder\": \"José Pérez\",\r\n     \"installments\": 1\r\n  },\r\n  \"delivery\": {\r\n        \"city\": \"Bogotá\",\r\n        \"address\": \"Calle 123\",\r\n        \"zipCode\": \"110111\",\r\n        \"state\": \"Cundinamarca\"\r\n      },\r\n  \"date\": \"2024-08-03T21:16:04.907Z\",\r\n  \"numberUnits\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -169,7 +169,7 @@
 	"variable": [
 		{
 			"key": "URL",
-			"value": "http://localhost:3000/api",
+			"value": "https://backend.audiotranscription.cc/api",
 			"type": "string"
 		}
 	]

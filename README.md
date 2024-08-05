@@ -6,6 +6,8 @@ This challenge is designed to test your ability to consume an API, process the d
 format. You will demonstrate your skills in backend development, focusing on creating a well-structured, maintainable,
 and testable codebase.
 
+[preview online](https://backend.audiotranscription.cc/api-docs)
+
 ## Project Structure
 
 The project structure has been set up for you. Below is an overview of the folders and their purposes:
@@ -93,9 +95,6 @@ The project structure has been set up for you. Below is an overview of the folde
 
 ## Model DataBase
 ![alt text](./img/Database.png)
-
-
-
 
 ## Installation
 
